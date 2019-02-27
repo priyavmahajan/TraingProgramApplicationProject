@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TrainingAndMeetingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Meeting">
+    <Key>
+      <PropertyRef Name="MeetingId" />
+    </Key>
+    <Property Name="MeetingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MeetingName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Agenda" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ScheduleId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Schedule" Relationship="Self.FK__Meetings__Schedu__49C3F6B7" FromRole="Meetings" ToRole="Schedules" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Meetings__UserId__4AB81AF0" FromRole="Meetings" ToRole="Users" />
+    <NavigationProperty Name="MeetingsAttendees" Relationship="Self.FK__MeetingsA__Meeti__4D94879B" FromRole="Meetings" ToRole="MeetingsAttendees" />
+  </EntityType>
+  <EntityType Name="MeetingsAttendee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MeetingId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Meeting" Relationship="Self.FK__MeetingsA__Meeti__4D94879B" FromRole="MeetingsAttendees" ToRole="Meetings" />
+    <NavigationProperty Name="User" Relationship="Self.FK__MeetingsA__UserI__4E88ABD4" FromRole="MeetingsAttendees" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__RoleId__3F466844" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="RoomDetail">
+    <Key>
+      <PropertyRef Name="RoomId" />
+    </Key>
+    <Property Name="RoomId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoomName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Schedules" Relationship="Self.FK__Schedules__RoomI__398D8EEE" FromRole="RoomDetails" ToRole="Schedules" />
+  </EntityType>
+  <EntityType Name="Schedule">
+    <Key>
+      <PropertyRef Name="ScheduleId" />
+    </Key>
+    <Property Name="ScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="RoomId" Type="Int32" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK__Meetings__Schedu__49C3F6B7" FromRole="Schedules" ToRole="Meetings" />
+    <NavigationProperty Name="RoomDetail" Relationship="Self.FK__Schedules__RoomI__398D8EEE" FromRole="Schedules" ToRole="RoomDetails" />
+    <NavigationProperty Name="Trainings" Relationship="Self.FK__Trainings__Sched__4222D4EF" FromRole="Schedules" ToRole="Trainings" />
+  </EntityType>
+  <EntityType Name="Training">
+    <Key>
+      <PropertyRef Name="TrainingId" />
+    </Key>
+    <Property Name="TrainingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Topic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ScheduleId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Schedule" Relationship="Self.FK__Trainings__Sched__4222D4EF" FromRole="Trainings" ToRole="Schedules" />
+    <NavigationProperty Name="TrainingsAttendees" Relationship="Self.FK__Trainings__Train__45F365D3" FromRole="Trainings" ToRole="TrainingsAttendees" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Trainings__UserI__4316F928" FromRole="Trainings" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="TrainingsAttendee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TrainingId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Training" Relationship="Self.FK__Trainings__Train__45F365D3" FromRole="TrainingsAttendees" ToRole="Trainings" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Trainings__UserI__46E78A0C" FromRole="TrainingsAttendees" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="EmailLink" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK__Meetings__UserId__4AB81AF0" FromRole="Users" ToRole="Meetings" />
+    <NavigationProperty Name="MeetingsAttendees" Relationship="Self.FK__MeetingsA__UserI__4E88ABD4" FromRole="Users" ToRole="MeetingsAttendees" />
+    <NavigationProperty Name="Role" Relationship="Self.FK__Users__RoleId__3F466844" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="Trainings" Relationship="Self.FK__Trainings__UserI__4316F928" FromRole="Users" ToRole="Trainings" />
+    <NavigationProperty Name="TrainingsAttendees" Relationship="Self.FK__Trainings__UserI__46E78A0C" FromRole="Users" ToRole="TrainingsAttendees" />
+  </EntityType>
+  <Association Name="FK__Meetings__Schedu__49C3F6B7">
+    <End Role="Schedules" Type="Self.Schedule" Multiplicity="0..1" />
+    <End Role="Meetings" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedules">
+        <PropertyRef Name="ScheduleId" />
+      </Principal>
+      <Dependent Role="Meetings">
+        <PropertyRef Name="ScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Meetings__UserId__4AB81AF0">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Meetings" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Meetings">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MeetingsA__Meeti__4D94879B">
+    <End Role="Meetings" Type="Self.Meeting" Multiplicity="0..1" />
+    <End Role="MeetingsAttendees" Type="Self.MeetingsAttendee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Meetings">
+        <PropertyRef Name="MeetingId" />
+      </Principal>
+      <Dependent Role="MeetingsAttendees">
+        <PropertyRef Name="MeetingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MeetingsA__UserI__4E88ABD4">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="MeetingsAttendees" Type="Self.MeetingsAttendee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="MeetingsAttendees">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__RoleId__3F466844">
+    <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Schedules__RoomI__398D8EEE">
+    <End Role="RoomDetails" Type="Self.RoomDetail" Multiplicity="0..1" />
+    <End Role="Schedules" Type="Self.Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoomDetails">
+        <PropertyRef Name="RoomId" />
+      </Principal>
+      <Dependent Role="Schedules">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trainings__Sched__4222D4EF">
+    <End Role="Schedules" Type="Self.Schedule" Multiplicity="0..1" />
+    <End Role="Trainings" Type="Self.Training" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedules">
+        <PropertyRef Name="ScheduleId" />
+      </Principal>
+      <Dependent Role="Trainings">
+        <PropertyRef Name="ScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trainings__Train__45F365D3">
+    <End Role="Trainings" Type="Self.Training" Multiplicity="0..1" />
+    <End Role="TrainingsAttendees" Type="Self.TrainingsAttendee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trainings">
+        <PropertyRef Name="TrainingId" />
+      </Principal>
+      <Dependent Role="TrainingsAttendees">
+        <PropertyRef Name="TrainingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trainings__UserI__4316F928">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Trainings" Type="Self.Training" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Trainings">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trainings__UserI__46E78A0C">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="TrainingsAttendees" Type="Self.TrainingsAttendee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="TrainingsAttendees">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TrainingAndMeetingEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Meetings" EntityType="Self.Meeting" />
+    <EntitySet Name="MeetingsAttendees" EntityType="Self.MeetingsAttendee" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="RoomDetails" EntityType="Self.RoomDetail" />
+    <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+    <EntitySet Name="Trainings" EntityType="Self.Training" />
+    <EntitySet Name="TrainingsAttendees" EntityType="Self.TrainingsAttendee" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__Meetings__Schedu__49C3F6B7" Association="Self.FK__Meetings__Schedu__49C3F6B7">
+      <End Role="Schedules" EntitySet="Schedules" />
+      <End Role="Meetings" EntitySet="Meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Meetings__UserId__4AB81AF0" Association="Self.FK__Meetings__UserId__4AB81AF0">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Meetings" EntitySet="Meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MeetingsA__Meeti__4D94879B" Association="Self.FK__MeetingsA__Meeti__4D94879B">
+      <End Role="Meetings" EntitySet="Meetings" />
+      <End Role="MeetingsAttendees" EntitySet="MeetingsAttendees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MeetingsA__UserI__4E88ABD4" Association="Self.FK__MeetingsA__UserI__4E88ABD4">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="MeetingsAttendees" EntitySet="MeetingsAttendees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__RoleId__3F466844" Association="Self.FK__Users__RoleId__3F466844">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Schedules__RoomI__398D8EEE" Association="Self.FK__Schedules__RoomI__398D8EEE">
+      <End Role="RoomDetails" EntitySet="RoomDetails" />
+      <End Role="Schedules" EntitySet="Schedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trainings__Sched__4222D4EF" Association="Self.FK__Trainings__Sched__4222D4EF">
+      <End Role="Schedules" EntitySet="Schedules" />
+      <End Role="Trainings" EntitySet="Trainings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trainings__Train__45F365D3" Association="Self.FK__Trainings__Train__45F365D3">
+      <End Role="Trainings" EntitySet="Trainings" />
+      <End Role="TrainingsAttendees" EntitySet="TrainingsAttendees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trainings__UserI__4316F928" Association="Self.FK__Trainings__UserI__4316F928">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Trainings" EntitySet="Trainings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trainings__UserI__46E78A0C" Association="Self.FK__Trainings__UserI__46E78A0C">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TrainingsAttendees" EntitySet="TrainingsAttendees" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
