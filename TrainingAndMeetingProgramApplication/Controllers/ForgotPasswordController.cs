@@ -32,7 +32,7 @@ namespace TrainingAndMeetingProgramApplication.Controllers
                     mm.Subject = "Account Activation";
                     string body = "Hello " + users.FirstName + ",";
                     body += "<br /><br />Please click the following link to Reset your password";
-                    body += "<br /><a href = 'http://localhost:50544/api/ForgotPassword/VeryFiyAccount/" + code + "'>Click here to activate your account.</a>";  //append activation code with verify account url
+                    body += "<br /><a href = 'http://localhost:61574/api/ForgotPassword/VeryFiyAccount/" + code + "'>Click here to activate your account.</a>";  //append activation code with verify account url
                     mm.Body = body;
                     mm.IsBodyHtml = true;
                     SmtpClient smtp = new SmtpClient();
